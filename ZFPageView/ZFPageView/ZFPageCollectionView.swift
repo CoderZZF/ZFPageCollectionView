@@ -10,7 +10,21 @@ import UIKit
 
 private let kPageCollectionViewCellID = "kPageCollectionViewCellID"
 
+protocol ZFPageCollectionViewDataSource : class {
+    // 有多少组
+    func numberOfSectionInPageCollectionView(_ pageCollectionView : ZFPageCollectionView) -> Int
+    
+    // 每组里面有多少个数据
+    func pageCollectionView(_ pageCollectionView : ZFPageCollectionView, numberOfItemInSection section : Int) -> Int
+    
+    // 每一个cell长什么样子
+    func pageCollectionView(_ pageCollectionView : ZFPageCollectionView, cellAtIndexPath indexPath : IndexPath) -> UICollectionViewCell
+}
+
 class ZFPageCollectionView: UIView {
+    
+    weak var dataSource : ZFPageCollectionViewDataSource?
+    
     fileprivate var titles : [String]
     fileprivate var isTitleInTop : Bool
     fileprivate var style : ZFPageStyle
@@ -51,7 +65,7 @@ extension ZFPageCollectionView {
         let collectionView = UICollectionView(frame: collectionFrame, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.randomColor()
         collectionView.dataSource = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kPageCollectionViewCellID)
+//        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kPageCollectionViewCellID)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         addSubview(collectionView)
@@ -68,19 +82,17 @@ extension ZFPageCollectionView {
 
 extension ZFPageCollectionView : UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return dataSource?.numberOfSectionInPageCollectionView(self) ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 27
+        return dataSource?.pageCollectionView(self, numberOfItemInSection: section) ?? 0
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPageCollectionViewCellID, for: indexPath)
-        cell.backgroundColor = UIColor.randomColor()
         
-        return cell
+        return (dataSource?.pageCollectionView(self, cellAtIndexPath: indexPath))!
     }
     
     

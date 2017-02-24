@@ -25,7 +25,25 @@ class ViewController: UIViewController {
         style.isShowBottomLine = true
         // 4. 创建PageCollectionView
         let pageCollectionView = ZFPageCollectionView(frame: pageFrame, titles: titles, style: style, isTitleInTop: true)
+        pageCollectionView.dataSource = self
         view.addSubview(pageCollectionView)
     }
 }
 
+
+
+extension ViewController : ZFPageCollectionViewDataSource {
+    func numberOfSectionInPageCollectionView(_ pageCollectionView: ZFPageCollectionView) -> Int {
+        return 4
+    }
+    
+    func pageCollectionView(_ pageCollectionView: ZFPageCollectionView, numberOfItemInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func pageCollectionView(_ pageCollectionView: ZFPageCollectionView, cellAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = UICollectionViewCell()
+        cell.backgroundColor = UIColor.randomColor()
+        return cell
+    }
+}
