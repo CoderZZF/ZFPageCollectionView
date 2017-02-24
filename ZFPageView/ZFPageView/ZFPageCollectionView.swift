@@ -40,17 +40,20 @@ extension ZFPageCollectionView {
         addSubview(titleView)
         
         // 2. UICollectionView
+        let layout = ZFPageCollectionLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.itemMargin = 5
+        layout.lineMargin = 5
+        
         let collectionY = isTitleInTop ? style.titleHeight : 0
         let collectionH = bounds.height - style.titleHeight - style.pageControlHeight
         let collectionFrame = CGRect(x: 0, y: collectionY, width: bounds.width, height: collectionH)
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 60, height: 60)
-        layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: collectionFrame, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.randomColor()
         collectionView.dataSource = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kPageCollectionViewCellID)
         collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         addSubview(collectionView)
         
         // 3. UIPageControl
@@ -69,7 +72,7 @@ extension ZFPageCollectionView : UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 31
+        return 27
     }
     
     
