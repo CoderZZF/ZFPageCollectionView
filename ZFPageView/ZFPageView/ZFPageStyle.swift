@@ -9,6 +9,7 @@
 import UIKit
 
 struct ZFPageStyle {
+    var pageControlHeight : CGFloat = 20 // UIPageControl的高度
     
     var titleHeight : CGFloat = 44 // 标题view的高度
     var normalColor: UIColor = UIColor(r: 255, g: 255, b: 255) // 文本普通颜色

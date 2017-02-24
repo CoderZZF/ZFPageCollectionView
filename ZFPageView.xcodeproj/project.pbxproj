@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B5C32051E5F7C1700F0C06B /* ZFPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5C32041E5F7C1700F0C06B /* ZFPageCollectionView.swift */; };
 		2B6EF0D71E5C8EE600C02A71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6EF0D61E5C8EE600C02A71 /* AppDelegate.swift */; };
 		2B6EF0D91E5C8EE600C02A71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6EF0D81E5C8EE600C02A71 /* ViewController.swift */; };
 		2B6EF0DC1E5C8EE600C02A71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EF0DA1E5C8EE600C02A71 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B5C32041E5F7C1700F0C06B /* ZFPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFPageCollectionView.swift; sourceTree = "<group>"; };
 		2B6EF0D31E5C8EE600C02A71 /* ZFPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZFPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6EF0D61E5C8EE600C02A71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B6EF0D81E5C8EE600C02A71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		2B6EF0E81E5C8F4000C02A71 /* ZFPageView */ = {
 			isa = PBXGroup;
 			children = (
+				2B5C32041E5F7C1700F0C06B /* ZFPageCollectionView.swift */,
 				2B6EF0E91E5C8FA300C02A71 /* ZFPageView.swift */,
 				2B6EF0EB1E5C8FB300C02A71 /* ZFTitleView.swift */,
 				2B6EF0ED1E5C8FCB00C02A71 /* ZFContentView.swift */,
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B6EF0D91E5C8EE600C02A71 /* ViewController.swift in Sources */,
+				2B5C32051E5F7C1700F0C06B /* ZFPageCollectionView.swift in Sources */,
 				2B6EF0EC1E5C8FB300C02A71 /* ZFTitleView.swift in Sources */,
 				2B6EF0F01E5C907F00C02A71 /* ZFPageStyle.swift in Sources */,
 				2B6EF0D71E5C8EE600C02A71 /* AppDelegate.swift in Sources */,
@@ -328,6 +332,7 @@
 				2B6EF0E71E5C8EE600C02A71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
