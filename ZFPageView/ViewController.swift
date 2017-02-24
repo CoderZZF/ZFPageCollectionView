@@ -52,7 +52,15 @@ extension ViewController : ZFPageCollectionViewDataSource {
     }
     
     func pageCollectionView(_ pageCollectionView: ZFPageCollectionView, numberOfItemInSection section: Int) -> Int {
-        return 30
+        if section == 0 {
+            return 100
+        } else if section == 1 {
+            return 18
+        } else if section == 2 {
+            return 40
+        } else {
+            return 21
+        }
     }
     
     func pageCollectionView(_ pageCollectionView: ZFPageCollectionView, _ collectionView: UICollectionView, cellAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {

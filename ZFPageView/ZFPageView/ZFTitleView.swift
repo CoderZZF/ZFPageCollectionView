@@ -179,6 +179,15 @@ extension ZFTitleView {
             return
         }
         
+        // 2. 通知代理
+        // 可选连: 如果可选类型有值,则执行代码,如果没有值,什么事情都不会发生
+        delegate?.titleView(self, targetIndex: targetLabel.tag)
+        
+        // 3. 调整label
+        adjustTitles(targetLabel)
+    }
+    
+    fileprivate func adjustTitles(_ targetLabel : UILabel) {
         // 2. 让之前的label不选中,让新的label选中
         let sourceLabel = titleLabels[currentIndex]
         sourceLabel.textColor = style.normalColor
@@ -189,10 +198,6 @@ extension ZFTitleView {
         
         // 4. 调整点击label的位置,滚动到中间去
         adjustLabelPosition()
-        
-        // 5. 通知代理
-        // 可选连: 如果可选类型有值,则执行代码,如果没有值,什么事情都不会发生
-        delegate?.titleView(self, targetIndex: currentIndex)
         
         // 6. 调整文字的缩放
         if style.isNeedScale {
@@ -237,7 +242,17 @@ extension ZFTitleView {
     }
 }
 
+extension ZFTitleView {
+    func setCurrentIndex(_ index : Int) {
+        // 1. 取出targetLabel
+        let targetLabel = titleLabels[index]
+        
+        // 2. 调整label
+        adjustTitles(targetLabel)
+    }
+}
 
+// MARK:- ZFContentViewDelegate
 extension ZFTitleView : ZFContentViewDelegate {
     func contentView(_ contentView: ZFContentView, didEndScroll inIndex: Int) {
         currentIndex = inIndex
