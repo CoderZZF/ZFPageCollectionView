@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let kPageCollectionViewCellID = "kPageCollectionViewCellID"
-
 protocol ZFPageCollectionViewDataSource : class {
     // 有多少组
     func numberOfSectionInPageCollectionView(_ pageCollectionView : ZFPageCollectionView) -> Int
@@ -18,7 +16,7 @@ protocol ZFPageCollectionViewDataSource : class {
     func pageCollectionView(_ pageCollectionView : ZFPageCollectionView, numberOfItemInSection section : Int) -> Int
     
     // 每一个cell长什么样子
-    func pageCollectionView(_ pageCollectionView : ZFPageCollectionView, cellAtIndexPath indexPath : IndexPath) -> UICollectionViewCell
+    func pageCollectionView(_ pageCollectionView : ZFPageCollectionView, _ collectionView : UICollectionView, cellAtIndexPath indexPath : IndexPath) -> UICollectionViewCell
 }
 
 class ZFPageCollectionView: UIView {
@@ -26,12 +24,13 @@ class ZFPageCollectionView: UIView {
     weak var dataSource : ZFPageCollectionViewDataSource?
     
     fileprivate var titles : [String]
-    fileprivate var isTitleInTop : Bool
     fileprivate var style : ZFPageStyle
+    fileprivate var collectionView : UICollectionView!
+    fileprivate var layout : ZFPageCollectionLayout
     
-    init(frame: CGRect, titles : [String], style : ZFPageStyle, isTitleInTop : Bool) {
+    init(frame: CGRect, titles : [String], style : ZFPageStyle, layout : ZFPageCollectionLayout) {
         self.titles = titles
-        self.isTitleInTop = isTitleInTop
+        self.layout = layout
         self.style = style
         super.init(frame: frame)
         
@@ -47,19 +46,14 @@ class ZFPageCollectionView: UIView {
 extension ZFPageCollectionView {
     fileprivate func setupUI() {
         // 1. titleView
-        let titleY = isTitleInTop ? 0 : bounds.height - style.titleHeight
+        let titleY = style.isTitleInTop ? 0 : bounds.height - style.titleHeight
         let titleFrame = CGRect(x: 0, y: titleY, width: bounds.width, height: style.titleHeight)
         let titleView = ZFTitleView(frame: titleFrame, titles: titles, style: style)
         titleView.backgroundColor = UIColor.randomColor()
         addSubview(titleView)
         
         // 2. UICollectionView
-        let layout = ZFPageCollectionLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.itemMargin = 5
-        layout.lineMargin = 5
-        
-        let collectionY = isTitleInTop ? style.titleHeight : 0
+        let collectionY = style.isTitleInTop ? style.titleHeight : 0
         let collectionH = bounds.height - style.titleHeight - style.pageControlHeight
         let collectionFrame = CGRect(x: 0, y: collectionY, width: bounds.width, height: collectionH)
         let collectionView = UICollectionView(frame: collectionFrame, collectionViewLayout: layout)
@@ -69,6 +63,7 @@ extension ZFPageCollectionView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         addSubview(collectionView)
+        self.collectionView = collectionView
         
         // 3. UIPageControl
         let pageFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
@@ -79,6 +74,20 @@ extension ZFPageCollectionView {
     }
 }
 
+
+extension ZFPageCollectionView {
+    func registerCell(_ cell : AnyClass?, reusableIdentifier : String) {
+        collectionView.register(cell, forCellWithReuseIdentifier: reusableIdentifier)
+    }
+    
+    func registerNib(_ nib : UINib?, reusableIdentifier : String) {
+        collectionView.register(nib, forCellWithReuseIdentifier: reusableIdentifier)
+    }
+    
+    func reloadData() {
+        collectionView.reloadData()
+    }
+}
 
 extension ZFPageCollectionView : UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -92,7 +101,7 @@ extension ZFPageCollectionView : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        return (dataSource?.pageCollectionView(self, cellAtIndexPath: indexPath))!
+        return (dataSource?.pageCollectionView(self, collectionView, cellAtIndexPath: indexPath))!
     }
     
     

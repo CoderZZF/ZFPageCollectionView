@@ -9,6 +9,7 @@
 import UIKit
 
 struct ZFPageStyle {
+    var isTitleInTop : Bool = true // 标题是否在顶部
     var pageControlHeight : CGFloat = 20 // UIPageControl的高度
     
     var titleHeight : CGFloat = 44 // 标题view的高度
